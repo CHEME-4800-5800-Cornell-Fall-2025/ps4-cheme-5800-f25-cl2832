@@ -74,7 +74,12 @@ function solve(model::MySimulatedAnnealingMinimumVariancePortfolioAllocationProb
         accepted_counter = 0; 
         
         # TODO: Implement simulated annealing logic here -
-        throw(ErrorException("Oooops! Simulated annealing logic not yet implemented!!"));
+
+
+
+
+        
+        #throw(ErrorException("Oooops! Simulated annealing logic not yet implemented!!"));
 
         # update KL -
         fraction_accepted = accepted_counter/KL; # what is the fraction of accepted moves
