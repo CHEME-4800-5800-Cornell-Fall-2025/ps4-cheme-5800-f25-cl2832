@@ -74,7 +74,34 @@ function solve(model::MySimulatedAnnealingMinimumVariancePortfolioAllocationProb
         accepted_counter = 0; 
         
         # TODO: Implement simulated annealing logic here -
+        # main loop: run KL iterations at each temperature level
+        for iteration = 1:KL
 
+            # generate new candidate solution by perturbing current solution
+            candidate_w = current_w .+ β .* randn(length(current_w))
+            
+            # project onto feasible region (ensure non-negative weights)
+            candidate_w = max.(candidate_w, 0.0)
+            
+            # evaluate candidate solution
+            candidate_f = _objective_function(candidate_w, ḡ, Σ̂, R, μ, ρ)
+            
+            # calculate change in objective function
+            Δf = candidate_f - current_f
+            
+            # accept or reject the candidate solution based on Metropolis criterion
+            if Δf < 0 || rand() < exp(-Δf/T)
+                current_w = candidate_w
+                current_f = candidate_f
+                accepted_counter += 1
+                
+                # update best solution if current is better
+                if current_f < f_best
+                    w_best = copy(current_w)
+                    f_best = current_f
+                end
+            end
+        end
 
 
 
